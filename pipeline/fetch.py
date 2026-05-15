@@ -37,9 +37,11 @@ def init_db():
             price               REAL,
             timestamp           TEXT,
             minutes_to_close    REAL,
+            proxy_wallet        TEXT,
             size_zscore         REAL,
             timing_zscore       REAL,
             is_anomaly          INTEGER DEFAULT 0,
+            anomaly_type        TEXT DEFAULT 'none',
             FOREIGN KEY (condition_id) REFERENCES markets(condition_id)
         )
     ''')
@@ -94,10 +96,6 @@ def save_markets(markets):
 # ── Fetching trades ──────────────────────────────────────────────
 
 def fetch_trades_for_market(condition_id, limit=500):
-    """
-    Pull trades from the data API using conditionId directly.
-    No auth required. Returns a list of trade dicts.
-    """
     try:
         response = requests.get(
             f"{DATA_URL}/trades",
@@ -106,7 +104,6 @@ def fetch_trades_for_market(condition_id, limit=500):
         )
         response.raise_for_status()
         data = response.json()
-        # API returns a list directly
         return data if isinstance(data, list) else []
     except Exception as e:
         print(f"  Error fetching trades: {e}")
@@ -115,16 +112,19 @@ def fetch_trades_for_market(condition_id, limit=500):
 
 def calculate_minutes_to_close(unix_timestamp, end_date_str):
     """
-    Convert Unix timestamp + ISO end date into minutes-before-close.
+    How many minutes before market close was this trade placed?
     
-    Unix timestamp = seconds since Jan 1, 1970.
-    We convert both to UTC datetime objects and subtract.
+    We handle two edge cases:
+    - Negative result means trade was placed AFTER market closed (rare but happens)
+    - None means we couldn't parse the dates
     """
     try:
         trade_time = datetime.fromtimestamp(unix_timestamp, tz=timezone.utc)
         end_time   = datetime.fromisoformat(end_date_str.replace("Z", "+00:00"))
         delta_minutes = (end_time - trade_time).total_seconds() / 60
-        return max(delta_minutes, 0)
+        # Allow negative values through — they're meaningful
+        # (trade placed after close = settlement trade, interesting signal)
+        return round(delta_minutes, 2)
     except Exception:
         return None
 
@@ -133,10 +133,11 @@ def save_trades(trades, condition_id, end_date):
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     saved = 0
+
     for t in trades:
         unix_ts  = t.get("timestamp")
         minutes  = calculate_minutes_to_close(unix_ts, end_date or "")
-        # Convert Unix timestamp to readable string for storage
+
         try:
             ts_str = datetime.fromtimestamp(unix_ts, tz=timezone.utc).isoformat()
         except Exception:
@@ -144,20 +145,23 @@ def save_trades(trades, condition_id, end_date):
 
         c.execute('''
             INSERT OR IGNORE INTO trades
-                (id, condition_id, side, outcome, size, price, timestamp, minutes_to_close)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                (id, condition_id, side, outcome, size, price,
+                 timestamp, minutes_to_close, proxy_wallet)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
-            t.get("transactionHash"),   # unique ID per trade
+            t.get("transactionHash"),
             condition_id,
             t.get("side"),
             t.get("outcome"),
             float(t.get("size", 0)),
             float(t.get("price", 0)),
             ts_str,
-            minutes
+            minutes,
+            t.get("proxyWallet")
         ))
         if c.rowcount > 0:
             saved += 1
+
     conn.commit()
     conn.close()
     return saved
