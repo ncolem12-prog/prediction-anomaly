@@ -74,14 +74,14 @@ export default function Dashboard() {
   const [filter, setFilter]     = useState("all")
 
   useEffect(() => {
-    fetch("/api/anomalies")
+    fetch("/data.json")
       .then(r => r.json())
       .then(data => {
         if (data.error) { setError(data.error); return }
         setStats(data.stats)
         setAnomalies(data.anomalies)
-        setByMarket(data.byMarket)
-        setByType(data.byType)
+        setByMarket(data.by_market || data.byMarket || [])
+        setByType(data.by_type || data.byType || [])
       })
       .catch(() => setError("Could not connect to API."))
       .finally(() => setLoading(false))
