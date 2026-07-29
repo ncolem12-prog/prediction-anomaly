@@ -1,6 +1,8 @@
 import sqlite3
 import pandas as pd
 import numpy as np
+import json
+import os
 from datetime import datetime
 
 DB_PATH = "data/anomaly.db"
@@ -30,22 +32,19 @@ def evaluate():
     """
 
     conn = sqlite3.connect(DB_PATH)
-
     trades_df  = pd.read_sql("SELECT * FROM trades",  conn)
     markets_df = pd.read_sql("SELECT condition_id, question, volume, volume_24hr FROM markets", conn)
-
     conn.close()
 
     if trades_df.empty:
         print("No trades. Run fetch.py and detect.py first.")
         return
 
-    # Merge market names in
     df = trades_df.merge(markets_df, on="condition_id", how="left")
 
-    total    = len(df)
-    flagged  = df["is_anomaly"].sum()
-    normal   = total - flagged
+    total   = len(df)
+    flagged = df["is_anomaly"].sum()
+    normal  = total - flagged
 
     print()
     print("=" * 60)
@@ -70,7 +69,7 @@ def evaluate():
     print()
     print("2. FLAG RATE BY ANOMALY TYPE")
     print("-" * 40)
-    flagged_df = df[df["is_anomaly"] == 1]
+    flagged_df  = df[df["is_anomaly"] == 1]
     type_counts = flagged_df["anomaly_type"].value_counts()
     for atype, count in type_counts.items():
         pct = 100 * count / flagged
@@ -89,7 +88,7 @@ def evaluate():
     print(f"   {'Max bet size':20} ${flagged_sizes.max():>9.2f}  ${normal_sizes.max():>9.2f}")
     print(f"   {'Min bet size':20} ${flagged_sizes.min():>9.2f}  ${normal_sizes.min():>9.2f}")
 
-    # ── Section 4: Volume concentration ─────────────────────────
+    # ── Section 4: Volume concentration ──────────────────────────
     print()
     print("4. DOLLAR VOLUME IN FLAGGED TRADES")
     print("-" * 40)
@@ -108,10 +107,10 @@ def evaluate():
     print("5. FLAG RATE BY MARKET")
     print("-" * 40)
     market_stats = df.groupby("question").agg(
-        total_trades  = ("id", "count"),
+        total_trades   = ("id", "count"),
         flagged_trades = ("is_anomaly", "sum"),
-        avg_size      = ("size", "mean"),
-        max_size      = ("size", "max")
+        avg_size       = ("size", "mean"),
+        max_size       = ("size", "max")
     ).reset_index()
     market_stats["flag_rate"] = (
         market_stats["flagged_trades"] / market_stats["total_trades"] * 100
@@ -123,7 +122,7 @@ def evaluate():
         print(f"   {str(row['question'])[:45]:<45} "
               f"{row['flag_rate']:>5.1f}%  {bar}")
 
-    # ── Section 6: Honest limitations ───────────────────────────
+    # ── Section 6: Honest limitations ────────────────────────────
     print()
     print("6. HONEST LIMITATIONS")
     print("-" * 40)
@@ -151,17 +150,92 @@ def evaluate():
     print("=" * 60)
     print()
 
-    # Return metrics dict for dashboard use later
-    return {
+
+def export_json():
+    """
+    Export anomaly data to a static JSON file for the Vercel dashboard.
+    Reads from SQLite, writes to dashboard/public/data.json.
+    Vercel serves this file at /data.json — no database needed in cloud.
+    """
+    conn = sqlite3.connect(DB_PATH)
+    trades_df  = pd.read_sql("SELECT * FROM trades",  conn)
+    markets_df = pd.read_sql("SELECT condition_id, question, volume, volume_24hr FROM markets", conn)
+    conn.close()
+
+    if trades_df.empty:
+        print("No data to export.")
+        return
+
+    df = trades_df.merge(markets_df, on="condition_id", how="left")
+
+    total         = len(df)
+    flagged       = int(df["is_anomaly"].sum())
+    flagged_vol   = float(df[df["is_anomaly"]==1]["size"].sum())
+    total_vol     = float(df["size"].sum())
+    avg_flag_size = float(df[df["is_anomaly"]==1]["size"].mean())
+
+    stats = {
         "total_trades"    : total,
-        "flagged"         : int(flagged),
-        "flag_rate"       : round(100 * flagged / total, 2),
-        "flagged_volume"  : round(flagged_volume, 2),
-        "total_volume"    : round(total_volume, 2),
-        "volume_pct"      : round(100 * flagged_volume / total_volume, 2),
-        "type_breakdown"  : type_counts.to_dict()
+        "total_flagged"   : flagged,
+        "avg_flagged_size": round(avg_flag_size, 2),
+        "flagged_volume"  : round(flagged_vol, 2),
+        "total_volume"    : round(total_vol, 2)
     }
+
+    by_type = (
+        df[df["is_anomaly"]==1]["anomaly_type"]
+        .value_counts()
+        .reset_index()
+        .to_dict(orient="records")
+    )
+
+    by_market = (
+        df.groupby("question")
+        .agg(
+            total_trades = ("id", "count"),
+            flagged      = ("is_anomaly", "sum"),
+            max_bet      = ("size", "max")
+        )
+        .reset_index()
+    )
+    by_market["flag_rate"] = (
+        by_market["flagged"] / by_market["total_trades"] * 100
+    ).round(1)
+    by_market = by_market.sort_values("flag_rate", ascending=False)
+    by_market = by_market.to_dict(orient="records")
+
+    flagged_df = df[df["is_anomaly"]==1].copy()
+    flagged_df = flagged_df.sort_values("size_zscore", ascending=False).head(50)
+    anomalies  = flagged_df[[
+        "id", "question", "side", "outcome", "size", "price",
+        "timestamp", "minutes_to_close", "size_zscore",
+        "timing_zscore", "anomaly_type"
+    ]].to_dict(orient="records")
+
+    # Clean NaN — JSON can't serialize them
+    for a in anomalies:
+        for k, v in a.items():
+            if isinstance(v, float) and pd.isna(v):
+                a[k] = None
+
+    output = {
+        "generated_at" : datetime.now().isoformat(),
+        "stats"        : stats,
+        "by_type"      : by_type,
+        "by_market"    : by_market,
+        "anomalies"    : anomalies
+    }
+
+    out_path = os.path.normpath(os.path.join(
+        os.path.dirname(__file__), "..", "dashboard", "public", "data.json"
+    ))
+
+    with open(out_path, "w") as f:
+        json.dump(output, f, indent=2, default=str)
+
+    print(f"Exported {flagged} anomalies to data.json")
 
 
 if __name__ == "__main__":
     evaluate()
+    export_json()

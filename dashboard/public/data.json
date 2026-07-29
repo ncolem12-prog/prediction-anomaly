@@ -1,33 +1,61 @@
 {
-  "generated_at": "2026-05-15T19:48:27.700775",
+  "generated_at": "2026-07-28T21:09:20.430304",
   "stats": {
-    "total_trades": 10000,
-    "total_flagged": 179,
-    "avg_flagged_size": 3680.88,
-    "flagged_volume": 658877.34,
-    "total_volume": 1367751.22
+    "total_trades": 20000,
+    "total_flagged": 496,
+    "avg_flagged_size": 3092.17,
+    "flagged_volume": 1533713.98,
+    "total_volume": 2850957.13
   },
   "by_type": [
     {
       "anomaly_type": "size",
-      "count": 114
+      "count": 237
     },
     {
       "anomaly_type": "timing",
-      "count": 37
+      "count": 212
     },
     {
       "anomaly_type": "confluence",
-      "count": 28
+      "count": 47
     }
   ],
   "by_market": [
     {
-      "question": "New Playboi Carti Album before GTA VI?",
-      "total_trades": 500,
-      "flagged": 24,
-      "max_bet": 561.96,
-      "flag_rate": 4.8
+      "question": "Will Harvey Weinstein be sentenced to between 5 and 10 years in prison?",
+      "total_trades": 1000,
+      "flagged": 68,
+      "max_bet": 884.58,
+      "flag_rate": 6.8
+    },
+    {
+      "question": "Will Harvey Weinstein be sentenced to more than 30 years in prison?",
+      "total_trades": 1000,
+      "flagged": 65,
+      "max_bet": 1162.63,
+      "flag_rate": 6.5
+    },
+    {
+      "question": "Will Harvey Weinstein be sentenced to less than 5 years in prison?",
+      "total_trades": 1000,
+      "flagged": 65,
+      "max_bet": 2485.78,
+      "flag_rate": 6.5
+    },
+    {
+      "question": "Will Harvey Weinstein be sentenced to between 10 and 20 years in prison?",
+      "total_trades": 1000,
+      "flagged": 61,
+      "max_bet": 1200.0,
+      "flag_rate": 6.1
+    },
+    {
+      "question": "Will Harvey Weinstein be sentenced to between 20 and 30 years in prison?",
+      "total_trades": 1000,
+      "flagged": 52,
+      "max_bet": 1936.57,
+      "flag_rate": 5.2
     },
     {
       "question": "Will the Montreal Canadiens win the 2026 NHL Stanley Cup?",
@@ -37,53 +65,11 @@
       "flag_rate": 3.2
     },
     {
-      "question": "New Rihanna Album before GTA VI?",
-      "total_trades": 500,
-      "flagged": 15,
-      "max_bet": 327.60453,
-      "flag_rate": 3.0
-    },
-    {
       "question": "Will Jesus Christ return before GTA VI?",
-      "total_trades": 500,
-      "flagged": 15,
+      "total_trades": 1000,
+      "flagged": 22,
       "max_bet": 3839.115383,
-      "flag_rate": 3.0
-    },
-    {
-      "question": "Will Harvey Weinstein be sentenced to between 5 and 10 years in prison?",
-      "total_trades": 500,
-      "flagged": 13,
-      "max_bet": 884.58,
-      "flag_rate": 2.6
-    },
-    {
-      "question": "Will Harvey Weinstein be sentenced to no prison time?",
-      "total_trades": 500,
-      "flagged": 12,
-      "max_bet": 913.25,
-      "flag_rate": 2.4
-    },
-    {
-      "question": "Will Harvey Weinstein be sentenced to more than 30 years in prison?",
-      "total_trades": 500,
-      "flagged": 12,
-      "max_bet": 1162.63,
-      "flag_rate": 2.4
-    },
-    {
-      "question": "Will Harvey Weinstein be sentenced to between 10 and 20 years in prison?",
-      "total_trades": 500,
-      "flagged": 10,
-      "max_bet": 1200.0,
-      "flag_rate": 2.0
-    },
-    {
-      "question": "Will Harvey Weinstein be sentenced to less than 5 years in prison?",
-      "total_trades": 500,
-      "flagged": 10,
-      "max_bet": 2485.78,
-      "flag_rate": 2.0
+      "flag_rate": 2.2
     },
     {
       "question": "Will the Cleveland Cavaliers win the 2026 NBA Finals?",
@@ -93,18 +79,67 @@
       "flag_rate": 1.8
     },
     {
-      "question": "Will China invades Taiwan before GTA VI?",
+      "question": "Trump out as President before GTA VI?",
+      "total_trades": 1000,
+      "flagged": 18,
+      "max_bet": 2040.816325,
+      "flag_rate": 1.8
+    },
+    {
+      "question": "Will Harvey Weinstein be sentenced to no prison time?",
+      "total_trades": 1000,
+      "flagged": 17,
+      "max_bet": 2090.67,
+      "flag_rate": 1.7
+    },
+    {
+      "question": "Will Gavin Newsom win the 2028 Democratic presidential nomination?",
       "total_trades": 500,
       "flagged": 8,
-      "max_bet": 2830.0,
+      "max_bet": 11043.41,
       "flag_rate": 1.6
     },
     {
-      "question": "Trump out as President before GTA VI?",
+      "question": "Will Alexandria Ocasio-Cortez win the 2028 Democratic presidential nomination?",
       "total_trades": 500,
-      "flagged": 7,
-      "max_bet": 2040.816325,
-      "flag_rate": 1.4
+      "flagged": 8,
+      "max_bet": 12796.39,
+      "flag_rate": 1.6
+    },
+    {
+      "question": "Will Kamala Harris win the 2028 Democratic presidential nomination?",
+      "total_trades": 500,
+      "flagged": 8,
+      "max_bet": 67273.4,
+      "flag_rate": 1.6
+    },
+    {
+      "question": "New Rihanna Album before GTA VI?",
+      "total_trades": 1000,
+      "flagged": 15,
+      "max_bet": 1021.13,
+      "flag_rate": 1.5
+    },
+    {
+      "question": "Will China invades Taiwan before GTA VI?",
+      "total_trades": 1000,
+      "flagged": 12,
+      "max_bet": 2830.0,
+      "flag_rate": 1.2
+    },
+    {
+      "question": "Xi Jinping out before 2027?",
+      "total_trades": 500,
+      "flagged": 6,
+      "max_bet": 18296.24,
+      "flag_rate": 1.2
+    },
+    {
+      "question": "Will the Buffalo Sabres win the 2026 NHL Stanley Cup?",
+      "total_trades": 500,
+      "flagged": 5,
+      "max_bet": 31049.533727,
+      "flag_rate": 1.0
     },
     {
       "question": "Will the Oklahoma City Thunder win the 2026 NBA Finals?",
@@ -121,17 +156,24 @@
       "flag_rate": 1.0
     },
     {
-      "question": "Will the Buffalo Sabres win the 2026 NHL Stanley Cup?",
+      "question": "Will Wes Moore win the 2028 Democratic presidential nomination?",
       "total_trades": 500,
       "flagged": 5,
-      "max_bet": 31049.533727,
+      "max_bet": 100000.0,
       "flag_rate": 1.0
     },
     {
-      "question": "Will Harvey Weinstein be sentenced to between 20 and 30 years in prison?",
+      "question": "Will Stephen A. Smith win the 2028 Democratic presidential nomination?",
       "total_trades": 500,
       "flagged": 4,
-      "max_bet": 1936.57,
+      "max_bet": 26328.65,
+      "flag_rate": 0.8
+    },
+    {
+      "question": "Will Pete Buttigieg win the 2028 Democratic presidential nomination?",
+      "total_trades": 500,
+      "flagged": 4,
+      "max_bet": 29832.36,
       "flag_rate": 0.8
     },
     {
@@ -149,6 +191,20 @@
       "flag_rate": 0.6
     },
     {
+      "question": "Will bitcoin hit $1m before GTA VI?",
+      "total_trades": 1000,
+      "flagged": 4,
+      "max_bet": 37823.960076,
+      "flag_rate": 0.4
+    },
+    {
+      "question": "New Playboi Carti Album before GTA VI?",
+      "total_trades": 1000,
+      "flagged": 4,
+      "max_bet": 561.96,
+      "flag_rate": 0.4
+    },
+    {
       "question": "Will the Vegas Golden Knights win the 2026 NHL Stanley Cup?",
       "total_trades": 500,
       "flagged": 2,
@@ -156,11 +212,11 @@
       "flag_rate": 0.4
     },
     {
-      "question": "Will bitcoin hit $1m before GTA VI?",
+      "question": "Will Josh Shapiro win the 2028 Democratic presidential nomination?",
       "total_trades": 500,
-      "flagged": 1,
-      "max_bet": 37823.960076,
-      "flag_rate": 0.2
+      "flagged": 2,
+      "max_bet": 110626.8,
+      "flag_rate": 0.4
     }
   ],
   "anomalies": [
@@ -173,8 +229,21 @@
       "price": 0.5173992876387785,
       "timestamp": "2026-05-15T11:27:28+00:00",
       "minutes_to_close": 110912.53,
-      "size_zscore": 22.007872812701628,
-      "timing_zscore": 1.238043154548499,
+      "size_zscore": 30.9551085061005,
+      "timing_zscore": -0.9353397367564086,
+      "anomaly_type": "size"
+    },
+    {
+      "id": "0x16e4be8788fd9ca4aea010643c30aaf982b044bbe75dc49f477af56d2a90d071",
+      "question": "New Playboi Carti Album before GTA VI?",
+      "side": "BUY",
+      "outcome": "No",
+      "size": 561.96,
+      "price": 0.42,
+      "timestamp": "2026-04-28T14:21:26+00:00",
+      "minutes_to_close": 135218.57,
+      "size_zscore": 27.647660238230756,
+      "timing_zscore": -1.0604317068294775,
       "anomaly_type": "size"
     },
     {
@@ -204,6 +273,32 @@
       "anomaly_type": "confluence"
     },
     {
+      "id": "0xe8368ab13c198cbe3b0ce7605e149e3eb59c96fe35cd6281276435b9042a9c4e",
+      "question": "Will Harvey Weinstein be sentenced to less than 5 years in prison?",
+      "side": "BUY",
+      "outcome": "No",
+      "size": 2485.78,
+      "price": 0.961,
+      "timestamp": "2026-05-15T18:12:14+00:00",
+      "minutes_to_close": -194772.23,
+      "size_zscore": 21.68305404397913,
+      "timing_zscore": -0.2407145392749522,
+      "anomaly_type": "size"
+    },
+    {
+      "id": "0x367c446c56ee4f6366c7f2df5b5d79477c824dc55d922c831bcff27fd75134ef",
+      "question": "New Rihanna Album before GTA VI?",
+      "side": "BUY",
+      "outcome": "No",
+      "size": 1021.13,
+      "price": 0.5,
+      "timestamp": "2026-07-27T09:28:24+00:00",
+      "minutes_to_close": 5911.6,
+      "size_zscore": 21.63009364770183,
+      "timing_zscore": 0.9846706463172186,
+      "anomaly_type": "size"
+    },
+    {
       "id": "0xc2d1c1d859b0d6cd689b0ca2bbffaa150450a9aca0634221c163e0e37216cb9f",
       "question": "Will the Vegas Golden Knights win the 2026 NHL Stanley Cup?",
       "side": "SELL",
@@ -214,6 +309,19 @@
       "minutes_to_close": 65741.57,
       "size_zscore": 20.869452300760667,
       "timing_zscore": 1.434757139000556,
+      "anomaly_type": "size"
+    },
+    {
+      "id": "0x5122f058d2b04d0a691a8176a4692e7f6b599dd29c6ff5c3ffc4dfb47a5e5bde",
+      "question": "Will Josh Shapiro win the 2028 Democratic presidential nomination?",
+      "side": "SELL",
+      "outcome": "Yes",
+      "size": 110626.8,
+      "price": 0.0510923927,
+      "timestamp": "2026-07-24T19:26:36+00:00",
+      "minutes_to_close": 1204113.4,
+      "size_zscore": 20.299487647233036,
+      "timing_zscore": 0.04150941529559999,
       "anomaly_type": "size"
     },
     {
@@ -230,16 +338,42 @@
       "anomaly_type": "size"
     },
     {
-      "id": "0x16e4be8788fd9ca4aea010643c30aaf982b044bbe75dc49f477af56d2a90d071",
-      "question": "New Playboi Carti Album before GTA VI?",
+      "id": "0x91980ba7aef7f99ee04bf3f14209139557ed1de280145f14316c19640a2418fb",
+      "question": "Will Harvey Weinstein be sentenced to between 20 and 30 years in prison?",
       "side": "BUY",
       "outcome": "No",
-      "size": 561.96,
-      "price": 0.42,
-      "timestamp": "2026-04-28T14:21:26+00:00",
-      "minutes_to_close": 135218.57,
-      "size_zscore": 19.689794477973965,
-      "timing_zscore": -0.4444515558702608,
+      "size": 1936.57,
+      "price": 0.9986387685443852,
+      "timestamp": "2026-05-15T18:01:57+00:00",
+      "minutes_to_close": -194761.95,
+      "size_zscore": 19.820668851442914,
+      "timing_zscore": -0.24022118293333541,
+      "anomaly_type": "size"
+    },
+    {
+      "id": "0xf2a9ed7f9992f79a515316a7fb6bf60ae0f3481c15c03bd0136f18946024059e",
+      "question": "Will Pete Buttigieg win the 2028 Democratic presidential nomination?",
+      "side": "SELL",
+      "outcome": "Yes",
+      "size": 29832.36,
+      "price": 0.0510361229,
+      "timestamp": "2026-07-25T16:59:42+00:00",
+      "minutes_to_close": 1202820.3,
+      "size_zscore": 19.69787149865564,
+      "timing_zscore": 0.1781108736705498,
+      "anomaly_type": "size"
+    },
+    {
+      "id": "0x2602fc725a5f83bd443c136c9679207587605a46de59282087c0df7cce974536",
+      "question": "Will Harvey Weinstein be sentenced to no prison time?",
+      "side": "SELL",
+      "outcome": "No",
+      "size": 2090.67,
+      "price": 0.0252553248,
+      "timestamp": "2026-07-15T00:27:50+00:00",
+      "minutes_to_close": -281547.83,
+      "size_zscore": 19.128833969468623,
+      "timing_zscore": 1.0048549001960965,
       "anomaly_type": "size"
     },
     {
@@ -256,43 +390,82 @@
       "anomaly_type": "size"
     },
     {
-      "id": "0x91980ba7aef7f99ee04bf3f14209139557ed1de280145f14316c19640a2418fb",
-      "question": "Will Harvey Weinstein be sentenced to between 20 and 30 years in prison?",
-      "side": "BUY",
+      "id": "0x9032f737acf33fddc4d0ea1ee0ff9d54241fb7c4be9421e85ae180fbb5e103df",
+      "question": "Will China invades Taiwan before GTA VI?",
+      "side": "SELL",
       "outcome": "No",
-      "size": 1936.57,
-      "price": 0.9986387685443852,
-      "timestamp": "2026-05-15T18:01:57+00:00",
-      "minutes_to_close": -194761.95,
-      "size_zscore": 17.512364404026627,
-      "timing_zscore": 1.4744964150188233,
+      "size": 2830.0,
+      "price": 0.4883708833922262,
+      "timestamp": "2026-05-04T14:07:32+00:00",
+      "minutes_to_close": 126592.47,
+      "size_zscore": 18.764634863427805,
+      "timing_zscore": -1.0534364982247089,
       "anomaly_type": "size"
     },
     {
-      "id": "0x06e536f4cb9142f917d1e5f8b4da9c1184a0003203f8289c2bc37f9b987b346f",
-      "question": "Will Harvey Weinstein be sentenced to between 10 and 20 years in prison?",
+      "id": "0xb255c179300f652a936f0cef03b7233b0db95e75c8fdeb187d311644a0cca2a8",
+      "question": "Will Kamala Harris win the 2028 Democratic presidential nomination?",
       "side": "BUY",
-      "outcome": "No",
-      "size": 1200.0,
-      "price": 0.998,
-      "timestamp": "2026-05-15T18:05:20+00:00",
-      "minutes_to_close": -194765.33,
-      "size_zscore": 17.438731605586394,
-      "timing_zscore": 1.4148173716343615,
+      "outcome": "Yes",
+      "size": 67273.4,
+      "price": 0.0705359472,
+      "timestamp": "2026-07-25T11:58:43+00:00",
+      "minutes_to_close": 1203121.28,
+      "size_zscore": 18.727131709002137,
+      "timing_zscore": -0.6243145718533,
       "anomaly_type": "size"
     },
     {
-      "id": "0xe8368ab13c198cbe3b0ce7605e149e3eb59c96fe35cd6281276435b9042a9c4e",
-      "question": "Will Harvey Weinstein be sentenced to less than 5 years in prison?",
+      "id": "0x493dfdddb8a388af4fb8f59fdbf72e2f8acd253897fdc4e80607f3e54c4d439e",
+      "question": "Will Jesus Christ return before GTA VI?",
       "side": "BUY",
       "outcome": "No",
-      "size": 2485.78,
-      "price": 0.961,
-      "timestamp": "2026-05-15T18:12:14+00:00",
-      "minutes_to_close": -194772.23,
-      "size_zscore": 16.73513951482774,
-      "timing_zscore": 1.5487348697106995,
-      "anomaly_type": "confluence"
+      "size": 3839.115383,
+      "price": 0.5199999999583237,
+      "timestamp": "2026-05-11T22:15:24+00:00",
+      "minutes_to_close": 116024.6,
+      "size_zscore": 18.616997406210224,
+      "timing_zscore": -1.0465764743754213,
+      "anomaly_type": "size"
+    },
+    {
+      "id": "0xa31d53d6f4470bc3b0052f73839ccf8822ede844bb260037aad3288371b9f779",
+      "question": "Will Gavin Newsom win the 2028 Democratic presidential nomination?",
+      "side": "SELL",
+      "outcome": "Yes",
+      "size": 11043.41,
+      "price": 0.1952815389,
+      "timestamp": "2026-07-27T12:23:51+00:00",
+      "minutes_to_close": 1200216.15,
+      "size_zscore": 18.60239418871502,
+      "timing_zscore": 0.7843985225258905,
+      "anomaly_type": "size"
+    },
+    {
+      "id": "0xcf5915dc251204012f3e49473e77fead50222b6361d305931cf50e6ddc35bd25",
+      "question": "Will Wes Moore win the 2028 Democratic presidential nomination?",
+      "side": "SELL",
+      "outcome": "Yes",
+      "size": 100000.0,
+      "price": 0.0106549765,
+      "timestamp": "2026-07-18T23:09:00+00:00",
+      "minutes_to_close": 1212531.0,
+      "size_zscore": 17.665232963239955,
+      "timing_zscore": 0.4748676682688587,
+      "anomaly_type": "size"
+    },
+    {
+      "id": "0xf3bccdb366cbf7f64c845dd972e3f52afe396c321d8546217532d5706b245e36",
+      "question": "Will Stephen A. Smith win the 2028 Democratic presidential nomination?",
+      "side": "SELL",
+      "outcome": "Yes",
+      "size": 26328.65,
+      "price": 0.01,
+      "timestamp": "2026-07-13T18:06:07+00:00",
+      "minutes_to_close": 1220033.88,
+      "size_zscore": 17.06804562471141,
+      "timing_zscore": -1.1135270833347541,
+      "anomaly_type": "size"
     },
     {
       "id": "0x477be0340ae9bd3197ff87d5f67569557bc093bad1ed03f51280007ee980cbe4",
@@ -316,34 +489,21 @@
       "price": 0.4899999998775,
       "timestamp": "2026-05-13T03:54:56+00:00",
       "minutes_to_close": 114245.07,
-      "size_zscore": 15.816314445559387,
-      "timing_zscore": 0.8650170550512178,
+      "size_zscore": 15.437329336523472,
+      "timing_zscore": -0.8623719163898191,
       "anomaly_type": "size"
     },
     {
-      "id": "0xe4ab098624c0408e68f5a273854f22b7770f4de93ea5b39db2edf2986b6c8447",
-      "question": "Will Harvey Weinstein be sentenced to more than 30 years in prison?",
+      "id": "0xa0bd1834b33dff0290be716d620722189adce9824ccc41b36439162fe6d7d69d",
+      "question": "Trump out as President before GTA VI?",
       "side": "BUY",
-      "outcome": "Yes",
-      "size": 1162.63,
-      "price": 0.001,
-      "timestamp": "2026-05-15T19:47:46+00:00",
-      "minutes_to_close": -194867.77,
-      "size_zscore": 15.788640343137962,
-      "timing_zscore": 1.6880853070956188,
-      "anomaly_type": "confluence"
-    },
-    {
-      "id": "0x9032f737acf33fddc4d0ea1ee0ff9d54241fb7c4be9421e85ae180fbb5e103df",
-      "question": "Will China invades Taiwan before GTA VI?",
-      "side": "SELL",
       "outcome": "No",
-      "size": 2830.0,
-      "price": 0.4883708833922262,
-      "timestamp": "2026-05-04T14:07:32+00:00",
-      "minutes_to_close": 126592.47,
-      "size_zscore": 14.986326494571568,
-      "timing_zscore": -0.4375398734126293,
+      "size": 1992.221763,
+      "price": 0.5019521509,
+      "timestamp": "2026-07-21T09:41:48+00:00",
+      "minutes_to_close": 14538.2,
+      "size_zscore": 15.063716032606122,
+      "timing_zscore": 1.1267052628361676,
       "anomaly_type": "size"
     },
     {
@@ -360,16 +520,16 @@
       "anomaly_type": "size"
     },
     {
-      "id": "0x493dfdddb8a388af4fb8f59fdbf72e2f8acd253897fdc4e80607f3e54c4d439e",
-      "question": "Will Jesus Christ return before GTA VI?",
-      "side": "BUY",
+      "id": "0x31d0f83b04bf2c06b32eb875963cf824dfa3bd80fd31963b45f00a3c798f4b42",
+      "question": "Xi Jinping out before 2027?",
+      "side": "SELL",
       "outcome": "No",
-      "size": 3839.115383,
-      "price": 0.5199999999583237,
-      "timestamp": "2026-05-11T22:15:24+00:00",
-      "minutes_to_close": 116024.6,
-      "size_zscore": 14.499425400486528,
-      "timing_zscore": -1.3657899087422425,
+      "size": 18296.24,
+      "price": 0.9500195931,
+      "timestamp": "2026-07-23T15:54:25+00:00",
+      "minutes_to_close": 230885.58,
+      "size_zscore": 14.409531632860705,
+      "timing_zscore": -0.2990788567348789,
       "anomaly_type": "size"
     },
     {
@@ -386,17 +546,108 @@
       "anomaly_type": "size"
     },
     {
-      "id": "0x8933fdadf8ee085e875799135090ff06827babd4aba605a7dac5d85bdc46eedf",
-      "question": "Will Harvey Weinstein be sentenced to no prison time?",
+      "id": "0x7e22e33bc0b655dd6f03f2dc0d1039e4019dd95f4c276eb342b14c96ade9d56c",
+      "question": "Will China invades Taiwan before GTA VI?",
       "side": "BUY",
       "outcome": "No",
-      "size": 913.25,
-      "price": 0.0932573665480427,
-      "timestamp": "2026-05-15T18:26:14+00:00",
-      "minutes_to_close": -194786.23,
-      "size_zscore": 12.49376805107742,
-      "timing_zscore": 1.1723261778079812,
+      "size": 2070.0,
+      "price": 0.5,
+      "timestamp": "2026-05-04T13:45:42+00:00",
+      "minutes_to_close": 126614.3,
+      "size_zscore": 13.67564758391573,
+      "timing_zscore": -1.0538058653657458,
       "anomaly_type": "size"
+    },
+    {
+      "id": "0x06e536f4cb9142f917d1e5f8b4da9c1184a0003203f8289c2bc37f9b987b346f",
+      "question": "Will Harvey Weinstein be sentenced to between 10 and 20 years in prison?",
+      "side": "BUY",
+      "outcome": "No",
+      "size": 1200.0,
+      "price": 0.998,
+      "timestamp": "2026-05-15T18:05:20+00:00",
+      "minutes_to_close": -194765.33,
+      "size_zscore": 13.074806389188028,
+      "timing_zscore": -0.24445652276350735,
+      "anomaly_type": "size"
+    },
+    {
+      "id": "0x2af9e9ef6d7ce07e03606fc1fab8b55390ef6032310444931b470b0f4877c0f3",
+      "question": "Will Stephen A. Smith win the 2028 Democratic presidential nomination?",
+      "side": "SELL",
+      "outcome": "Yes",
+      "size": 20000.0,
+      "price": 0.01,
+      "timestamp": "2026-07-13T11:24:29+00:00",
+      "minutes_to_close": 1220435.52,
+      "size_zscore": 12.924973030872195,
+      "timing_zscore": -1.163125384845176,
+      "anomaly_type": "size"
+    },
+    {
+      "id": "0x29693954c9cf2fe686ed18b8237eca3e29b751cb2096a218666423e5b9b845d2",
+      "question": "Will Alexandria Ocasio-Cortez win the 2028 Democratic presidential nomination?",
+      "side": "SELL",
+      "outcome": "Yes",
+      "size": 12796.39,
+      "price": 0.1336840687,
+      "timestamp": "2026-07-28T02:39:13+00:00",
+      "minutes_to_close": 1199360.78,
+      "size_zscore": 12.635580390185867,
+      "timing_zscore": 1.3192647261249102,
+      "anomaly_type": "size"
+    },
+    {
+      "id": "0xd9fb2f3d5b073151595cca8af2433e8cac808fc0dcb8227b9aad6d89c19e77dc",
+      "question": "Will China invades Taiwan before GTA VI?",
+      "side": "BUY",
+      "outcome": "No",
+      "size": 1904.76,
+      "price": 0.5,
+      "timestamp": "2026-07-27T07:34:43+00:00",
+      "minutes_to_close": 6025.28,
+      "size_zscore": 12.5691946127755,
+      "timing_zscore": 0.9865799137381823,
+      "anomaly_type": "size"
+    },
+    {
+      "id": "0x0eab065d6d6a1f3895ce33f20101de958e0095a9855628c3e46058eaae1fbd2f",
+      "question": "Will Alexandria Ocasio-Cortez win the 2028 Democratic presidential nomination?",
+      "side": "SELL",
+      "outcome": "Yes",
+      "size": 12700.0,
+      "price": 0.1430912102,
+      "timestamp": "2026-07-25T15:11:22+00:00",
+      "minutes_to_close": 1202928.63,
+      "size_zscore": 12.538736537588735,
+      "timing_zscore": 0.4760957042724878,
+      "anomaly_type": "size"
+    },
+    {
+      "id": "0xf74865963bcb5ed99b50e7c1753824846fcb767a475622ff004014b75d3bf8aa",
+      "question": "Will Harvey Weinstein be sentenced to between 10 and 20 years in prison?",
+      "side": "BUY",
+      "outcome": "Yes",
+      "size": 1150.472222,
+      "price": 0.0043460406,
+      "timestamp": "2026-07-22T20:17:10+00:00",
+      "minutes_to_close": -292817.17,
+      "size_zscore": 12.519204191615705,
+      "timing_zscore": 2.9646043955024073,
+      "anomaly_type": "confluence"
+    },
+    {
+      "id": "0xa6a48eddda5325185525589e033a273dafd96492e6ec341a88d05ecf36491d6d",
+      "question": "Will Harvey Weinstein be sentenced to between 10 and 20 years in prison?",
+      "side": "SELL",
+      "outcome": "Yes",
+      "size": 1150.47,
+      "price": 0.003,
+      "timestamp": "2026-07-22T20:20:07+00:00",
+      "minutes_to_close": -292820.12,
+      "size_zscore": 12.519179265238368,
+      "timing_zscore": 2.964700943713118,
+      "anomaly_type": "confluence"
     },
     {
       "id": "0x0e682fb123417f69de250831cd1ae46d981eea26cf317dfa3d4c30a19f4eb7b2",
@@ -409,6 +660,58 @@
       "minutes_to_close": 65975.13,
       "size_zscore": 12.413281712210123,
       "timing_zscore": 0.9763215012776006,
+      "anomaly_type": "size"
+    },
+    {
+      "id": "0xe4ab098624c0408e68f5a273854f22b7770f4de93ea5b39db2edf2986b6c8447",
+      "question": "Will Harvey Weinstein be sentenced to more than 30 years in prison?",
+      "side": "BUY",
+      "outcome": "Yes",
+      "size": 1162.63,
+      "price": 0.001,
+      "timestamp": "2026-05-15T19:47:46+00:00",
+      "minutes_to_close": -194867.77,
+      "size_zscore": 12.338528247327144,
+      "timing_zscore": -0.27172737630852967,
+      "anomaly_type": "size"
+    },
+    {
+      "id": "0xdb026f0cc8ec7a0d15b0d416b841d8f462c13bf02ba289a083a91bfe937dca7d",
+      "question": "Xi Jinping out before 2027?",
+      "side": "BUY",
+      "outcome": "No",
+      "size": 15117.68,
+      "price": 0.952,
+      "timestamp": "2026-07-26T07:58:27+00:00",
+      "minutes_to_close": 227041.55,
+      "size_zscore": 11.867995035968413,
+      "timing_zscore": 0.710455725384948,
+      "anomaly_type": "size"
+    },
+    {
+      "id": "0x4941ff44c9ae66936c1903a1b70f7099abaea37d9efa7c070f94f93733299106",
+      "question": "New Rihanna Album before GTA VI?",
+      "side": "BUY",
+      "outcome": "Yes",
+      "size": 555.09,
+      "price": 0.51,
+      "timestamp": "2026-07-27T09:28:24+00:00",
+      "minutes_to_close": 5911.6,
+      "size_zscore": 11.62202515551277,
+      "timing_zscore": 0.9846706463172186,
+      "anomaly_type": "size"
+    },
+    {
+      "id": "0x9ce623f544b9b2770646c5d825e03cf513987f3a215d5add8735176b6d55be97",
+      "question": "Will Harvey Weinstein be sentenced to between 20 and 30 years in prison?",
+      "side": "BUY",
+      "outcome": "Yes",
+      "size": 1115.82,
+      "price": 0.006,
+      "timestamp": "2026-05-15T20:30:59+00:00",
+      "minutes_to_close": -194910.98,
+      "size_zscore": 11.288447966120666,
+      "timing_zscore": -0.23529557153878236,
       "anomaly_type": "size"
     },
     {
@@ -438,16 +741,16 @@
       "anomaly_type": "size"
     },
     {
-      "id": "0x7e22e33bc0b655dd6f03f2dc0d1039e4019dd95f4c276eb342b14c96ade9d56c",
-      "question": "Will China invades Taiwan before GTA VI?",
+      "id": "0xbe994285853fbec54b9e109baa3e4b137aec9cad9a789ea383c684a91031d045",
+      "question": "Will Jesus Christ return before GTA VI?",
       "side": "BUY",
       "outcome": "No",
-      "size": 2070.0,
-      "price": 0.5,
-      "timestamp": "2026-05-04T13:45:42+00:00",
-      "minutes_to_close": 126614.3,
-      "size_zscore": 10.898127385434883,
-      "timing_zscore": -0.44030097066906904,
+      "size": 2295.2549,
+      "price": 0.51,
+      "timestamp": "2026-07-28T10:56:52+00:00",
+      "minutes_to_close": 4383.13,
+      "size_zscore": 11.016182166941626,
+      "timing_zscore": 1.016017001122337,
       "anomaly_type": "size"
     },
     {
@@ -464,185 +767,16 @@
       "anomaly_type": "size"
     },
     {
-      "id": "0x9ce623f544b9b2770646c5d825e03cf513987f3a215d5add8735176b6d55be97",
-      "question": "Will Harvey Weinstein be sentenced to between 20 and 30 years in prison?",
+      "id": "0xef9d08f06b624d908bb62f17dc16a5e918ce20ab2fe8b45fe4652ef79ecb937a",
+      "question": "Will Wes Moore win the 2028 Democratic presidential nomination?",
       "side": "BUY",
       "outcome": "Yes",
-      "size": 1115.82,
-      "price": 0.006,
-      "timestamp": "2026-05-15T20:30:59+00:00",
-      "minutes_to_close": -194910.98,
-      "size_zscore": 9.986600511290067,
-      "timing_zscore": 1.4883487023065984,
-      "anomaly_type": "size"
-    },
-    {
-      "id": "0xed84cbfd5361d64b2bb2051d63318fd86a77631a4c862424a64fc83cb9cee6e4",
-      "question": "GTA VI released before June 2026?",
-      "side": "BUY",
-      "outcome": "Yes",
-      "size": 12739.504,
-      "price": 0.00949801499336238,
-      "timestamp": "2026-05-14T18:56:37+00:00",
-      "minutes_to_close": 24063.38,
-      "size_zscore": 9.781437070186644,
-      "timing_zscore": -0.17558767771412598,
-      "anomaly_type": "size"
-    },
-    {
-      "id": "0xe20fc1aaa358c382b91861ad0f81a53ee8c8c45f6cf26cb1e9513ec6e4468fa1",
-      "question": "Will Harvey Weinstein be sentenced to between 5 and 10 years in prison?",
-      "side": "BUY",
-      "outcome": "Yes",
-      "size": 884.58,
-      "price": 0.001,
-      "timestamp": "2026-05-15T18:03:59+00:00",
-      "minutes_to_close": -194763.98,
-      "size_zscore": 9.48498574182539,
-      "timing_zscore": 1.5414126951280074,
-      "anomaly_type": "confluence"
-    },
-    {
-      "id": "0x97c5c86b689443d215431b09b2569477a67c55750dc77c796e9c30b0a0859ddd",
-      "question": "New Rihanna Album before GTA VI?",
-      "side": "BUY",
-      "outcome": "Yes",
-      "size": 327.60453,
-      "price": 0.6104921656608351,
-      "timestamp": "2026-05-12T22:04:55+00:00",
-      "minutes_to_close": 114595.08,
-      "size_zscore": 9.21059635831971,
-      "timing_zscore": -1.080018614185868,
-      "anomaly_type": "size"
-    },
-    {
-      "id": "0xb35d513275ef44897e58b16d20613b2e62c9f296eccaa6ec7c1c2ef98193c54a",
-      "question": "Will Harvey Weinstein be sentenced to between 5 and 10 years in prison?",
-      "side": "SELL",
-      "outcome": "No",
-      "size": 851.1,
-      "price": 0.9375426036893432,
-      "timestamp": "2026-05-11T03:50:41+00:00",
-      "minutes_to_close": -188150.68,
-      "size_zscore": 9.112032540878985,
-      "timing_zscore": 0.9107801349968587,
-      "anomaly_type": "size"
-    },
-    {
-      "id": "0x0190a636ac6d77f27844903531161f317e0aae90cfea38da2f3b9564129c2df4",
-      "question": "Will the Colorado Avalanche win the 2026 NHL Stanley Cup?",
-      "side": "BUY",
-      "outcome": "Yes",
-      "size": 28008.354923,
-      "price": 0.39686693593960637,
-      "timestamp": "2026-05-14T01:49:50+00:00",
-      "minutes_to_close": 67570.17,
-      "size_zscore": 8.773910171965962,
-      "timing_zscore": -0.6633915180876235,
-      "anomaly_type": "size"
-    },
-    {
-      "id": "0xd6783dc6454d0afc1e406da478beffcda49b0acdc1d4b6a41085469038b43c59",
-      "question": "Will Harvey Weinstein be sentenced to no prison time?",
-      "side": "SELL",
-      "outcome": "Yes",
-      "size": 642.0,
-      "price": 0.6654408722741433,
-      "timestamp": "2026-05-15T19:50:07+00:00",
-      "minutes_to_close": -194870.12,
-      "size_zscore": 8.669671937325113,
-      "timing_zscore": 1.1838131032361907,
-      "anomaly_type": "size"
-    },
-    {
-      "id": "0x8549799f241f79a17e8a97c0e482a1eb6cdecb0af0b673203e2d1dc498fd1fef",
-      "question": "New Rihanna Album before GTA VI?",
-      "side": "BUY",
-      "outcome": "No",
-      "size": 300.0,
-      "price": 0.458188,
-      "timestamp": "2026-05-14T15:23:56+00:00",
-      "minutes_to_close": 112116.07,
-      "size_zscore": 8.390428077037045,
-      "timing_zscore": 0.3852100055058226,
-      "anomaly_type": "size"
-    },
-    {
-      "id": "0x82ef3854b01232496d1ee1dcf1d14b4dc3a74d204b1b78ac57c99948744c6371",
-      "question": "Will Harvey Weinstein be sentenced to between 5 and 10 years in prison?",
-      "side": "BUY",
-      "outcome": "Yes",
-      "size": 749.47,
-      "price": 0.00796121259023043,
-      "timestamp": "2026-05-15T20:35:41+00:00",
-      "minutes_to_close": -194915.68,
-      "size_zscore": 7.979916835616649,
-      "timing_zscore": 1.5558785381068356,
-      "anomaly_type": "confluence"
-    },
-    {
-      "id": "0x6f73c285184dbbf3427b2d6bcdc9d39539e516f4de4574d5449d8cfbe4a5d762",
-      "question": "Trump out as President before GTA VI?",
-      "side": "BUY",
-      "outcome": "No",
-      "size": 1020.408162,
-      "price": 0.4899999996276,
-      "timestamp": "2026-05-12T14:52:36+00:00",
-      "minutes_to_close": 115027.4,
-      "size_zscore": 7.772095937748345,
-      "timing_zscore": 0.7551784130357763,
-      "anomaly_type": "size"
-    },
-    {
-      "id": "0xc19252a00494aa4fb9ece36e86df1da65e90e9b8f725ed5a36c4a266ea173bac",
-      "question": "Will Harvey Weinstein be sentenced to between 5 and 10 years in prison?",
-      "side": "SELL",
-      "outcome": "Yes",
-      "size": 720.4,
-      "price": 0.001,
-      "timestamp": "2026-05-15T17:57:06+00:00",
-      "minutes_to_close": -194757.1,
-      "size_zscore": 7.656089190708883,
-      "timing_zscore": 1.5407566305288354,
-      "anomaly_type": "confluence"
-    },
-    {
-      "id": "0x985773cffb31fdc53049b00dbd9bcc73c85cb216f8d2d3a44b35494f07615931",
-      "question": "Trump out as President before GTA VI?",
-      "side": "BUY",
-      "outcome": "No",
-      "size": 1000.0,
-      "price": 0.49,
-      "timestamp": "2026-05-07T19:57:37+00:00",
-      "minutes_to_close": 121922.38,
-      "size_zscore": 7.6112115775251254,
-      "timing_zscore": -0.2128724605388569,
-      "anomaly_type": "size"
-    },
-    {
-      "id": "0xaf5264ad2a140220b28c545d40a9f5a53095a71dae33ad7768da6a100f7fcc4b",
-      "question": "Will Harvey Weinstein be sentenced to no prison time?",
-      "side": "BUY",
-      "outcome": "No",
-      "size": 551.941615,
-      "price": 0.1811785817237209,
-      "timestamp": "2026-05-15T18:34:56+00:00",
-      "minutes_to_close": -194794.93,
-      "size_zscore": 7.400024305659457,
-      "timing_zscore": 1.1735174550904373,
-      "anomaly_type": "size"
-    },
-    {
-      "id": "0x4f45f2e17be245d9458682ef654ab94dd92602f9670f7461825c28480b22a7b4",
-      "question": "Will Jesus Christ return before GTA VI?",
-      "side": "BUY",
-      "outcome": "Yes",
-      "size": 2000.0,
-      "price": 0.49,
-      "timestamp": "2026-05-11T13:45:44+00:00",
-      "minutes_to_close": 116534.27,
-      "size_zscore": 7.378994340860004,
-      "timing_zscore": -1.6365508399873305,
+      "size": 57914.52,
+      "price": 0.014,
+      "timestamp": "2026-07-27T05:08:30+00:00",
+      "minutes_to_close": 1200651.5,
+      "size_zscore": 10.17796411299191,
+      "timing_zscore": 1.178228910198531,
       "anomaly_type": "size"
     },
     {
@@ -654,164 +788,86 @@
       "price": 0.48193978837060014,
       "timestamp": "2026-04-26T00:01:56+00:00",
       "minutes_to_close": 138958.07,
-      "size_zscore": 7.099608894925322,
-      "timing_zscore": -0.8393646474814362,
+      "size_zscore": 10.026935593623417,
+      "timing_zscore": -1.1196504606452524,
       "anomaly_type": "size"
     },
     {
-      "id": "0x27ebf4a5c7b847c007b3625dcf86e15cc20957d084bbab2e993577822ad512fd",
-      "question": "Will Harvey Weinstein be sentenced to less than 5 years in prison?",
-      "side": "BUY",
-      "outcome": "Yes",
-      "size": 1028.713635,
-      "price": 0.09720878152839882,
-      "timestamp": "2026-05-01T06:49:58+00:00",
-      "minutes_to_close": -173929.97,
-      "size_zscore": 6.752244955384325,
-      "timing_zscore": -0.5606516670585329,
-      "anomaly_type": "size"
-    },
-    {
-      "id": "0x8f30c3d156c86fa54571eaa072c68cbdd15a80f2dc21011a0995a244f8c765fb",
+      "id": "0xcff4a2889ee41e7e6ba8088117aa84f9124a9e3aed8b55c78831943bdc6d9c28",
       "question": "Will Harvey Weinstein be sentenced to more than 30 years in prison?",
       "side": "BUY",
-      "outcome": "No",
-      "size": 505.3,
-      "price": 0.999,
-      "timestamp": "2026-05-15T18:01:53+00:00",
-      "minutes_to_close": -194761.88,
-      "size_zscore": 6.651834299812235,
-      "timing_zscore": 1.6776618957406848,
+      "outcome": "Yes",
+      "size": 948.397665,
+      "price": 0.002108819,
+      "timestamp": "2026-07-04T17:15:20+00:00",
+      "minutes_to_close": -266715.33,
+      "size_zscore": 9.995586713146613,
+      "timing_zscore": 1.8740596849529136,
       "anomaly_type": "confluence"
     },
     {
-      "id": "0xb528d7ad542add6208592545741dd1d8a4bc28719f516cc7252f7aac3f2f1f86",
-      "question": "New Rihanna Album before GTA VI?",
-      "side": "BUY",
-      "outcome": "Yes",
-      "size": 232.15,
-      "price": 0.54,
-      "timestamp": "2026-05-14T19:19:53+00:00",
-      "minutes_to_close": 111880.12,
-      "size_zscore": 6.374511925411611,
-      "timing_zscore": 0.5246691818771451,
-      "anomaly_type": "size"
-    },
-    {
-      "id": "0xd9591fad9e41ec6107669a4cc5f7b502b844605254b714cdcbc71c87cafde9b6",
-      "question": "New Rihanna Album before GTA VI?",
+      "id": "0xe0d0a25d7122eb0878f919696f9a1c7434b7df65ab0870037942d76349d25d7d",
+      "question": "Will Harvey Weinstein be sentenced to more than 30 years in prison?",
       "side": "SELL",
       "outcome": "Yes",
-      "size": 232.15,
-      "price": 0.53,
-      "timestamp": "2026-05-14T19:20:18+00:00",
-      "minutes_to_close": 111879.7,
-      "size_zscore": 6.374511925411611,
-      "timing_zscore": 0.5249174245305704,
-      "anomaly_type": "size"
-    },
-    {
-      "id": "0x5c3b02a648dcd8015ca65b8fd4e6391a34ac6f7299efa163afbaa872db16fc2a",
-      "question": "Will Harvey Weinstein be sentenced to less than 5 years in prison?",
-      "side": "SELL",
-      "outcome": "Yes",
-      "size": 947.0,
-      "price": 0.03574276663146779,
-      "timestamp": "2026-05-05T22:16:26+00:00",
-      "minutes_to_close": -180616.43,
-      "size_zscore": 6.192394956874582,
-      "timing_zscore": 0.11606615061795611,
-      "anomaly_type": "size"
-    },
-    {
-      "id": "0x67f3a4e3049c6547b6f1ef10893235879263561f2be63fc42f83a60b5304e0d5",
-      "question": "Will the Montreal Canadiens win the 2026 NHL Stanley Cup?",
-      "side": "BUY",
-      "outcome": "Yes",
-      "size": 5723.14,
-      "price": 0.06,
-      "timestamp": "2026-05-14T16:26:09+00:00",
-      "minutes_to_close": 66693.85,
-      "size_zscore": 6.05941686449151,
-      "timing_zscore": 0.7053201694343858,
-      "anomaly_type": "size"
-    },
-    {
-      "id": "0x0d25ef32bbcb1732f3e6ed51f1d767abb17870271fcf1fea61be54e31e68acdd",
-      "question": "Will Harvey Weinstein be sentenced to less than 5 years in prison?",
-      "side": "SELL",
-      "outcome": "Yes",
-      "size": 909.98,
-      "price": 0.039,
-      "timestamp": "2026-05-15T17:56:57+00:00",
-      "minutes_to_close": -194756.95,
-      "size_zscore": 5.938757397551336,
-      "timing_zscore": 1.5471884238702853,
+      "size": 948.39,
+      "price": 0.0042540411,
+      "timestamp": "2026-07-04T18:15:04+00:00",
+      "minutes_to_close": -266775.07,
+      "size_zscore": 9.995502885246127,
+      "timing_zscore": 1.875843869677346,
       "anomaly_type": "confluence"
     },
     {
-      "id": "0x7d6919dc26ebc71f19f4f010b915468f5d68e68982db7acd2711b5766d90efc5",
+      "id": "0xe20fc1aaa358c382b91861ad0f81a53ee8c8c45f6cf26cb1e9513ec6e4468fa1",
       "question": "Will Harvey Weinstein be sentenced to between 5 and 10 years in prison?",
-      "side": "SELL",
+      "side": "BUY",
       "outcome": "Yes",
-      "size": 557.05,
-      "price": 0.04309415671842743,
-      "timestamp": "2026-05-05T13:29:30+00:00",
-      "minutes_to_close": -180089.5,
-      "size_zscore": 5.8364384925429595,
-      "timing_zscore": 0.14208030570165134,
+      "size": 884.58,
+      "price": 0.001,
+      "timestamp": "2026-05-15T18:03:59+00:00",
+      "minutes_to_close": -194763.98,
+      "size_zscore": 9.963270002322295,
+      "timing_zscore": -0.2921216826956838,
       "anomaly_type": "size"
     },
     {
-      "id": "0xa83e013a4dbbd29d5ff2be48d74ad83c93ccdc68d4dc336ebeb3b02a71d96365",
+      "id": "0xa50d2f27f300fa3debcb48b0ba4df074e47d20c0a0e002c3d496718fafb566eb",
+      "question": "New Rihanna Album before GTA VI?",
+      "side": "BUY",
+      "outcome": "Yes",
+      "size": 476.36,
+      "price": 0.51,
+      "timestamp": "2026-07-27T09:28:24+00:00",
+      "minutes_to_close": 5911.6,
+      "size_zscore": 9.931322142058892,
+      "timing_zscore": 0.9846706463172186,
+      "anomaly_type": "size"
+    },
+    {
+      "id": "0x066ed388fd75356db87019e467325eaa9afcaaab0c2a67fb89029dd34669dd8d",
       "question": "Will Harvey Weinstein be sentenced to no prison time?",
       "side": "BUY",
       "outcome": "Yes",
-      "size": 432.36,
-      "price": 0.4455362198168193,
-      "timestamp": "2026-05-15T17:12:20+00:00",
-      "minutes_to_close": -194712.33,
-      "size_zscore": 5.71415669571393,
-      "timing_zscore": 1.1622071673282444,
+      "size": 1091.03,
+      "price": 0.9688066048,
+      "timestamp": "2026-07-13T16:18:26+00:00",
+      "minutes_to_close": -279618.43,
+      "size_zscore": 9.85097601406448,
+      "timing_zscore": 0.9646135978624015,
       "anomaly_type": "size"
     },
     {
-      "id": "0x1aada4aefe2ed3270a75e45ae8c66c8d434d839b9082c7ef78aee5c8a4d562a6",
-      "question": "Will China invades Taiwan before GTA VI?",
-      "side": "SELL",
-      "outcome": "Yes",
-      "size": 1096.0,
-      "price": 0.5,
-      "timestamp": "2026-05-08T15:07:51+00:00",
-      "minutes_to_close": 120772.15,
-      "size_zscore": 5.658777474514974,
-      "timing_zscore": 0.2986245601008844,
-      "anomaly_type": "size"
-    },
-    {
-      "id": "0x8c66ab33c7f170be4ac776a96689bd11aec4fee0274bfa3275fa883afbba128e",
-      "question": "Will China invades Taiwan before GTA VI?",
-      "side": "SELL",
-      "outcome": "No",
-      "size": 1078.0,
-      "price": 0.49,
-      "timestamp": "2026-05-11T02:34:59+00:00",
-      "minutes_to_close": 117205.02,
-      "size_zscore": 5.561951706140684,
-      "timing_zscore": 0.7498015118353337,
-      "anomaly_type": "size"
-    },
-    {
-      "id": "0x7e144a6afa93ad17b2cdb9cdd78fc5586561d52134c3c0c913d0b674f087c353",
-      "question": "Will Harvey Weinstein be sentenced to less than 5 years in prison?",
+      "id": "0xf362016597530a210c5ed6460f7c254153d5a0169dc372bc03abafe312bb4ed2",
+      "question": "Will Harvey Weinstein be sentenced to more than 30 years in prison?",
       "side": "BUY",
       "outcome": "Yes",
-      "size": 846.147569,
-      "price": 0.11818269373294152,
-      "timestamp": "2026-05-12T12:34:14+00:00",
-      "minutes_to_close": -190114.23,
-      "size_zscore": 5.501418067337679,
-      "timing_zscore": 1.0773117856367518,
+      "size": 932.881379,
+      "price": 0.0267986901,
+      "timestamp": "2026-05-30T06:54:40+00:00",
+      "minutes_to_close": -215694.67,
+      "size_zscore": 9.825893604374665,
+      "timing_zscore": 0.3502852925446086,
       "anomaly_type": "size"
     }
   ]

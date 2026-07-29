@@ -69,6 +69,7 @@ export default function Dashboard() {
   const [anomalies, setAnomalies] = useState<Anomaly[]>([])
   const [byMarket, setByMarket] = useState<MarketStat[]>([])
   const [byType, setByType]     = useState<TypeStat[]>([])
+  const [generatedAt, setGeneratedAt] = useState<string>("")
   const [loading, setLoading]   = useState(true)
   const [error, setError]       = useState("")
   const [filter, setFilter]     = useState("all")
@@ -82,10 +83,22 @@ export default function Dashboard() {
         setAnomalies(data.anomalies)
         setByMarket(data.by_market || data.byMarket || [])
         setByType(data.by_type || data.byType || [])
+        setGeneratedAt(data.generated_at || "")
       })
       .catch(() => setError("Could not connect to API."))
       .finally(() => setLoading(false))
   }, [])
+
+  const formattedTimestamp = generatedAt
+    ? new Date(generatedAt).toLocaleString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        timeZoneName: "short",
+      })
+    : ""
 
   const filtered = filter === "all"
     ? anomalies
@@ -123,9 +136,14 @@ export default function Dashboard() {
             Prediction Market Anomaly Detector
           </h1>
           <p className="text-gray-400 text-sm">
-            Live Polymarket data · Z-score based detection · 
+            Live Polymarket data · Z-score based detection ·
             Size, timing, and confluence signals
           </p>
+          {formattedTimestamp && (
+            <p className="text-gray-500 text-xs mt-2">
+              Last updated: {formattedTimestamp}
+            </p>
+          )}
         </div>
 
         {/* Stat cards */}
