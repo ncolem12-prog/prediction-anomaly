@@ -15,10 +15,17 @@ export async function GET() {
         COUNT(*)                                    as total_trades,
         SUM(is_anomaly)                             as total_flagged,
         ROUND(AVG(CASE WHEN is_anomaly=1 
-              THEN size END), 2)                    as avg_flagged_size,
+              THEN size * price END), 2)            as avg_flagged_size,
+        ROUND(AVG(CASE WHEN is_anomaly=0 
+              THEN size * price END), 2)            as avg_normal_size,
+        SUM(CASE WHEN minutes_to_close < 0 
+              THEN 1 ELSE 0 END)                    as after_end_date,
         ROUND(SUM(CASE WHEN is_anomaly=1 
-              THEN size ELSE 0 END), 2)             as flagged_volume,
-        ROUND(SUM(size), 2)                         as total_volume
+              THEN size * price ELSE 0 END), 2)     as flagged_volume,
+        ROUND(SUM(size * price), 2)                 as total_volume,
+        SUBSTR(MIN(timestamp), 1, 10)               as data_from,
+        SUBSTR(MAX(timestamp), 1, 10)               as data_through,
+        COUNT(DISTINCT condition_id)                as markets
       FROM trades
     `).get() as Record<string, number>
 
@@ -38,7 +45,7 @@ export async function GET() {
         COUNT(t.id)              as total_trades,
         SUM(t.is_anomaly)        as flagged,
         ROUND(100.0 * SUM(t.is_anomaly) / COUNT(t.id), 1) as flag_rate,
-        ROUND(MAX(t.size), 2)    as max_bet
+        ROUND(MAX(t.size * t.price), 2)    as max_bet
       FROM trades t
       JOIN markets m ON t.condition_id = m.condition_id
       GROUP BY m.question
@@ -51,8 +58,10 @@ export async function GET() {
         t.id,
         t.side,
         t.outcome,
+        t.size * t.price as usd_size,
         t.size,
         t.price,
+        CASE WHEN t.minutes_to_close < 0 THEN 1 ELSE 0 END as after_end_date,
         t.timestamp,
         t.minutes_to_close,
         t.size_zscore,
