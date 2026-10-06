@@ -5,3 +5,8 @@ __pycache__/
 .DS_Store
 venv/
 dashboard/node_modules/
+
+# Personal and working documents. Never publish these.
+*.docx
+about-me*.md
+anti-ai-writing-style*.md

@@ -7,6 +7,11 @@ interface Stats {
   total_trades: number
   total_flagged: number
   avg_flagged_size: number
+  avg_normal_size?: number
+  after_end_date?: number
+  data_from?: string
+  data_through?: string
+  markets?: number
   flagged_volume: number
   total_volume: number
 }
@@ -16,10 +21,12 @@ interface Anomaly {
   question: string
   side: string
   outcome: string
-  size: number
-  price: number
+  usd_size: number      // dollars = shares x price
+  size: number          // shares (Polymarket's raw "size" field)
+  price: number         // dollars per share, 0 to 1
   timestamp: string
   minutes_to_close: number
+  after_end_date: number
   size_zscore: number
   timing_zscore: number
   anomaly_type: string
@@ -45,9 +52,22 @@ function fmt$(n: number) {
   }).format(n)
 }
 
-function fmtZ(n: number) {
-  return n?.toFixed(2) ?? "—"
+function fmtZ(n: number | null) {
+  return n == null ? "n/a" : n.toFixed(2)
 }
+
+// Time between the trade and the market's SCHEDULED end date.
+// Polymarket's end date is not the actual resolution time, so markets
+// can keep trading past it. Those trades get no timing score.
+function fmtTiming(a: { minutes_to_close: number | null; after_end_date: number }) {
+  if (a.minutes_to_close == null) return "n/a"
+  if (a.after_end_date) return "after end date"
+  if (a.minutes_to_close < 60) return `${Math.round(a.minutes_to_close)}m`
+  if (a.minutes_to_close < 60 * 48) return `${Math.round(a.minutes_to_close / 60)}h`
+  return `${Math.round(a.minutes_to_close / 60 / 24)}d`
+}
+
+const FLAG_TYPES = ["size", "timing", "confluence"]
 
 function anomalyColor(type: string) {
   if (type === "confluence") return "bg-red-100 text-red-800 border border-red-200"
@@ -136,12 +156,15 @@ export default function Dashboard() {
             Prediction Market Anomaly Detector
           </h1>
           <p className="text-gray-400 text-sm">
-            Live Polymarket data · Z-score based detection ·
-            Size, timing, and confluence signals
+            Polymarket trade data · Z-scores computed per market ·
+            Trade size in dollars (shares × price)
           </p>
           {formattedTimestamp && (
             <p className="text-gray-500 text-xs mt-2">
-              Last updated: {formattedTimestamp}
+              Last run: {formattedTimestamp}
+              {stats?.data_through
+                ? ` · Trades from ${stats.data_from} through ${stats.data_through} across ${stats.markets} markets`
+                : ""}
             </p>
           )}
         </div>
@@ -168,11 +191,16 @@ export default function Dashboard() {
             </div>
             <div className="bg-gray-900 rounded-xl p-4 border border-gray-800">
               <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">
-                Avg Flagged Bet
+                Avg Flagged Trade
               </p>
               <p className="text-2xl font-bold text-orange-400">
                 {fmt$(stats.avg_flagged_size)}
               </p>
+              {stats.avg_normal_size != null && (
+                <p className="text-gray-500 text-xs mt-1">
+                  vs {fmt$(stats.avg_normal_size)} for unflagged trades
+                </p>
+              )}
             </div>
             <div className="bg-gray-900 rounded-xl p-4 border border-gray-800">
               <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">
@@ -197,7 +225,10 @@ export default function Dashboard() {
                            tracking-wide mb-4">
               Flag Type Breakdown
             </h2>
-            {byType.map(t => (
+            {FLAG_TYPES.map(type => ({
+              anomaly_type: type,
+              count: byType.find(b => b.anomaly_type === type)?.count ?? 0,
+            })).map(t => (
               <div key={t.anomaly_type} className="flex items-center gap-3 mb-3">
                 <span className={`text-xs px-2 py-1 rounded-full font-medium
                                   ${anomalyColor(t.anomaly_type)}`}>
@@ -217,7 +248,10 @@ export default function Dashboard() {
               </div>
             ))}
             <p className="text-gray-600 text-xs mt-4 leading-relaxed">
-              Confluence = large AND late. Rarest flag, highest signal strength.
+              Size = unusually large in dollars for that market. Timing = placed
+              in the final 7 days before the scheduled end date and unusually late
+              for that market. Confluence = both. A count of 0 means no trade in
+              this sample met the rule.
             </p>
           </div>
 
@@ -280,10 +314,10 @@ export default function Dashboard() {
                                 text-xs uppercase tracking-wide">
                   <th className="text-left p-4">Market</th>
                   <th className="text-left p-4">Flag</th>
-                  <th className="text-right p-4">Bet Size</th>
+                  <th className="text-right p-4">Trade Size (USD)</th>
                   <th className="text-right p-4">Size Z</th>
                   <th className="text-right p-4">Timing Z</th>
-                  <th className="text-right p-4">Min to Close</th>
+                  <th className="text-right p-4">Time to Sched. End</th>
                   <th className="text-left p-4">Side</th>
                 </tr>
               </thead>
@@ -309,7 +343,10 @@ export default function Dashboard() {
                     </td>
                     <td className="p-4 text-right font-mono text-orange-300 
                                    font-semibold">
-                      {fmt$(a.size)}
+                      {fmt$(a.usd_size)}
+                      <p className="text-gray-600 text-xs font-normal mt-0.5">
+                        {Math.round(a.size).toLocaleString()} shares @ ${a.price.toFixed(3)}
+                      </p>
                     </td>
                     <td className="p-4 text-right font-mono text-gray-300">
                       {fmtZ(a.size_zscore)}
@@ -318,9 +355,7 @@ export default function Dashboard() {
                       {fmtZ(a.timing_zscore)}
                     </td>
                     <td className="p-4 text-right font-mono text-gray-400 text-xs">
-                      {a.minutes_to_close < 60
-                        ? `${Math.round(a.minutes_to_close)}m`
-                        : `${Math.round(a.minutes_to_close / 60 / 24)}d`}
+                      {fmtTiming(a)}
                     </td>
                     <td className="p-4">
                       <span className={`text-xs font-medium
@@ -331,21 +366,41 @@ export default function Dashboard() {
                       </span>
                       <p className="text-gray-600 text-xs mt-0.5">
                         {a.side === "BUY"
-                          ? `Betting ${a.outcome.toLowerCase()} will happen`
-                          : `Exiting a ${a.outcome.toLowerCase()} position`}
+                          ? `Bought "${a.outcome}" shares`
+                          : `Sold "${a.outcome}" shares`}
                       </p>
                     </td>
                   </tr>
                 ))}
+                {filtered.length === 0 && (
+                  <tr>
+                    <td colSpan={7} className="p-6 text-center text-gray-500 text-sm">
+                      No trades in this sample met this rule.
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
 
           <div className="p-4 border-t border-gray-800">
             <p className="text-gray-600 text-xs">
-              Showing {filtered.length} flagged trades · 
-              Z-scores computed per market · 
-              Confluence = size z &gt; 1.5 AND timing z &gt; 1.5 simultaneously
+              Showing {filtered.length} flagged trades ·
+              Z-scores computed per market ·
+              Dollar size = shares × price
+            </p>
+            <p className="text-gray-600 text-xs mt-2 leading-relaxed">
+              A flag means a trade is statistically unusual for its market. It is
+              not evidence of insider trading. There are no ground truth labels, so
+              precision and recall are not measured.
+              {stats?.after_end_date
+                ? ` ${stats.after_end_date.toLocaleString()} trades in this sample were placed after their market's scheduled end date and receive no timing score.`
+                : ""}
+            </p>
+            <p className="text-gray-600 text-xs mt-2 leading-relaxed">
+              Correction, October 2026: earlier versions reported share counts as
+              dollars and scored trades placed after the scheduled end date as
+              "late." Both are fixed. Details are in the README.
             </p>
           </div>
         </div>

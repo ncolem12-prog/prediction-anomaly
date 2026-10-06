@@ -16,6 +16,12 @@ TIMING_THRESHOLD = 2.0   # flag if timing z-score exceeds this
 CONFLUENCE_MIN   = 1.5   # flag if BOTH scores exceed this (weaker individually, stronger together)
 MIN_TRADES       = 5     # skip markets with fewer than this — not enough baseline
 
+# A trade only counts as "late" if it was placed BEFORE the market's scheduled
+# end date and within this many days of it. Without this gate, the most recent
+# trade in a market that closes in 2028 scores as "late", which is meaningless.
+TIMING_WINDOW_DAYS = 7
+TIMING_WINDOW_MIN  = TIMING_WINDOW_DAYS * 24 * 60
+
 
 # ── Z-score calculation ───────────────────────────────────────────
 
@@ -55,6 +61,17 @@ def detect_anomalies():
 
     print(f"Loaded {len(trades_df)} trades across {markets_df.shape[0]} markets.")
 
+    # ── Units ────────────────────────────────────────────────────
+    # Polymarket's `size` is a quantity of outcome shares, not dollars.
+    # `price` is dollars per share (0 to 1). Dollars at risk = size x price.
+    # 10,000 shares at $0.02 is a $200 trade, not a $10,000 trade.
+    trades_df["usd_size"] = trades_df["size"] * trades_df["price"]
+
+    # Trades placed after the scheduled end date. Polymarket's `endDate` is the
+    # scheduled date, not the actual resolution time, so a market can keep
+    # trading past it. These trades have no meaningful "time to close".
+    trades_df["after_end_date"] = (trades_df["minutes_to_close"] < 0).astype(int)
+
     results = []
 
     for condition_id, group in trades_df.groupby("condition_id"):
@@ -66,18 +83,25 @@ def detect_anomalies():
             continue
 
         # ── Signal 1: Size anomaly ───────────────────────────────
-        # Is this bet unusually large for this specific market?
-        group["size_zscore"] = compute_zscores(group["size"])
+        # Is this bet unusually large IN DOLLARS for this specific market?
+        group["size_zscore"] = compute_zscores(group["usd_size"])
 
         # ── Signal 2: Timing anomaly ─────────────────────────────
         # Is this bet placed unusually close to market close?
         # We INVERT minutes_to_close so that "late" = high z-score.
         # A bet placed 10 minutes before close has a small minutes_to_close
         # value, so negating it gives a large number — which z-scores high.
-        if group["minutes_to_close"].notna().sum() >= MIN_TRADES:
-            group["timing_zscore"] = compute_zscores(-group["minutes_to_close"])
-        else:
-            group["timing_zscore"] = np.nan
+        #
+        # Only trades placed BEFORE the scheduled end date get a timing score,
+        # and the baseline is built from those trades only. Trades after the
+        # end date get NaN (not applicable), so they can never be timing flags.
+        before_end = group["minutes_to_close"] >= 0
+        group["timing_zscore"] = np.nan
+        if before_end.sum() >= MIN_TRADES:
+            group.loc[before_end, "timing_zscore"] = compute_zscores(
+                -group.loc[before_end, "minutes_to_close"]
+            )
+        in_window = before_end & (group["minutes_to_close"] <= TIMING_WINDOW_MIN)
 
         # ── Signal 3: Anomaly flag ───────────────────────────────
         # Three ways to get flagged:
@@ -85,8 +109,9 @@ def detect_anomalies():
         # 2. Timing alone is very high (very late bet)
         # 3. Both are moderately high (confluence — the most interesting case)
         size_flag       = group["size_zscore"]   > SIZE_THRESHOLD
-        timing_flag     = group["timing_zscore"] > TIMING_THRESHOLD
+        timing_flag     = in_window & (group["timing_zscore"] > TIMING_THRESHOLD)
         confluence_flag = (
+            in_window &
             (group["size_zscore"]   > CONFLUENCE_MIN) &
             (group["timing_zscore"] > CONFLUENCE_MIN)
         )
@@ -112,12 +137,30 @@ def detect_anomalies():
     # ── Write results back to DB ─────────────────────────────────
     conn = sqlite3.connect(DB_PATH)
 
-    # Add anomaly_type column if it doesn't exist yet
-    try:
-        conn.execute("ALTER TABLE trades ADD COLUMN anomaly_type TEXT DEFAULT 'none'")
-        conn.commit()
-    except Exception:
-        pass  # column already exists, that's fine
+    # Add columns if they don't exist yet
+    for ddl in (
+        "ALTER TABLE trades ADD COLUMN anomaly_type TEXT DEFAULT 'none'",
+        "ALTER TABLE trades ADD COLUMN usd_size REAL",
+        "ALTER TABLE trades ADD COLUMN after_end_date INTEGER DEFAULT 0",
+    ):
+        try:
+            conn.execute(ddl)
+            conn.commit()
+        except Exception:
+            pass  # column already exists, that's fine
+
+    # Reset every trade first, so trades in markets we skipped (too few trades)
+    # don't keep stale flags from an earlier run.
+    conn.execute('''
+        UPDATE trades
+        SET usd_size       = size * price,
+            after_end_date = CASE WHEN minutes_to_close < 0 THEN 1 ELSE 0 END,
+            size_zscore    = NULL,
+            timing_zscore  = NULL,
+            is_anomaly     = 0,
+            anomaly_type   = 'none'
+    ''')
+    conn.commit()
 
     cursor = conn.cursor()
     updated = 0
@@ -177,8 +220,12 @@ def detect_anomalies():
 
     for _, row in top.iterrows():
         print(f"  Market  : {str(row.get('question', ''))[:55]}")
-        print(f"  Size    : ${row['size']:>10.2f}  (z={row['size_zscore']:.2f})")
-        print(f"  Timing  : {row['minutes_to_close']:.0f} min to close  (z={row['timing_zscore']:.2f})")
+        print(f"  Size    : ${row['usd_size']:>10.2f}  ({row['size']:,.0f} shares @ ${row['price']:.3f}, z={row['size_zscore']:.2f})")
+        if row["after_end_date"]:
+            print(f"  Timing  : placed after scheduled end date (no timing score)")
+        else:
+            tz = "n/a" if pd.isna(row["timing_zscore"]) else f"{row['timing_zscore']:.2f}"
+            print(f"  Timing  : {row['minutes_to_close']/1440:.1f} days to scheduled end  (z={tz})")
         print(f"  Type    : {row['anomaly_type']}")
         print(f"  Side    : {row['side']} {row['outcome']}")
         print()

@@ -79,8 +79,8 @@ def evaluate():
     print()
     print("3. BET SIZE: FLAGGED vs NORMAL")
     print("-" * 40)
-    flagged_sizes = df[df["is_anomaly"] == 1]["size"]
-    normal_sizes  = df[df["is_anomaly"] == 0]["size"]
+    flagged_sizes = df[df["is_anomaly"] == 1]["usd_size"]
+    normal_sizes  = df[df["is_anomaly"] == 0]["usd_size"]
 
     print(f"   {'':20} {'FLAGGED':>10}  {'NORMAL':>10}")
     print(f"   {'Mean bet size':20} ${flagged_sizes.mean():>9.2f}  ${normal_sizes.mean():>9.2f}")
@@ -92,15 +92,16 @@ def evaluate():
     print()
     print("4. DOLLAR VOLUME IN FLAGGED TRADES")
     print("-" * 40)
-    total_volume   = df["size"].sum()
-    flagged_volume = flagged_df["size"].sum()
+    total_volume   = df["usd_size"].sum()
+    flagged_volume = flagged_df["usd_size"].sum()
     print(f"   Total volume in dataset : ${total_volume:>12,.2f}")
     print(f"   Volume in flagged trades: ${flagged_volume:>12,.2f}")
     print(f"   Flagged volume share    : {100*flagged_volume/total_volume:.1f}%")
     print()
     print("   Interpretation:")
-    print("   If 1.9% of trades represent a large % of volume,")
-    print("   these aren't random noise — they're large actors.")
+    print("   All figures are dollars (shares x price), not share counts.")
+    print("   A high share here says flagged trades are large. It does not")
+    print("   say they are informed. Size flags are large by construction.")
 
     # ── Section 5: Flag rate per market ──────────────────────────
     print()
@@ -109,8 +110,8 @@ def evaluate():
     market_stats = df.groupby("question").agg(
         total_trades   = ("id", "count"),
         flagged_trades = ("is_anomaly", "sum"),
-        avg_size       = ("size", "mean"),
-        max_size       = ("size", "max")
+        avg_size       = ("usd_size", "mean"),
+        max_size       = ("usd_size", "max")
     ).reset_index()
     market_stats["flag_rate"] = (
         market_stats["flagged_trades"] / market_stats["total_trades"] * 100
@@ -170,14 +171,21 @@ def export_json():
 
     total         = len(df)
     flagged       = int(df["is_anomaly"].sum())
-    flagged_vol   = float(df[df["is_anomaly"]==1]["size"].sum())
-    total_vol     = float(df["size"].sum())
-    avg_flag_size = float(df[df["is_anomaly"]==1]["size"].mean())
+    flagged_vol   = float(df[df["is_anomaly"]==1]["usd_size"].sum())
+    total_vol     = float(df["usd_size"].sum())
+    avg_flag_size = float(df[df["is_anomaly"]==1]["usd_size"].mean())
+    avg_norm_size = float(df[df["is_anomaly"]==0]["usd_size"].mean())
 
     stats = {
         "total_trades"    : total,
         "total_flagged"   : flagged,
         "avg_flagged_size": round(avg_flag_size, 2),
+        "avg_normal_size" : round(avg_norm_size, 2),
+        "after_end_date"  : int(df["after_end_date"].sum()),
+        "units"           : "usd (shares x price)",
+        "data_from"       : str(df["timestamp"].min())[:10],
+        "data_through"    : str(df["timestamp"].max())[:10],
+        "markets"         : int(df["condition_id"].nunique()),
         "flagged_volume"  : round(flagged_vol, 2),
         "total_volume"    : round(total_vol, 2)
     }
@@ -194,7 +202,7 @@ def export_json():
         .agg(
             total_trades = ("id", "count"),
             flagged      = ("is_anomaly", "sum"),
-            max_bet      = ("size", "max")
+            max_bet      = ("usd_size", "max")
         )
         .reset_index()
     )
@@ -207,8 +215,8 @@ def export_json():
     flagged_df = df[df["is_anomaly"]==1].copy()
     flagged_df = flagged_df.sort_values("size_zscore", ascending=False).head(50)
     anomalies  = flagged_df[[
-        "id", "question", "side", "outcome", "size", "price",
-        "timestamp", "minutes_to_close", "size_zscore",
+        "id", "question", "side", "outcome", "usd_size", "size", "price",
+        "timestamp", "minutes_to_close", "after_end_date", "size_zscore",
         "timing_zscore", "anomaly_type"
     ]].to_dict(orient="records")
 
