@@ -66,6 +66,11 @@ def detect_anomalies():
     # `price` is dollars per share (0 to 1). Dollars at risk = size x price.
     # 10,000 shares at $0.02 is a $200 trade, not a $10,000 trade.
     trades_df["usd_size"] = trades_df["size"] * trades_df["price"]
+    trades_df["potential_win"] = np.where(
+        trades_df["side"] == "BUY",              # the check: is this trade a BUY?
+        trades_df["size"] * (1 - trades_df["price"]),  # if yes: the buy formula
+        trades_df["size"] * trades_df["price"],        # if no: the sell formula
+    )
 
     # Trades placed after the scheduled end date. Polymarket's `endDate` is the
     # scheduled date, not the actual resolution time, so a market can keep
@@ -83,8 +88,8 @@ def detect_anomalies():
             continue
 
         # ── Signal 1: Size anomaly ───────────────────────────────
-        # Is this bet unusually large IN DOLLARS for this specific market?
-        group["size_zscore"] = compute_zscores(group["usd_size"])
+        # Is this bet's potential win unusually large for this specific market?
+        group["size_zscore"] = compute_zscores(group["potential_win"])
 
         # ── Signal 2: Timing anomaly ─────────────────────────────
         # Is this bet placed unusually close to market close?
