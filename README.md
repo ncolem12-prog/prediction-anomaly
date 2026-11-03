@@ -11,7 +11,7 @@ A prototype anomaly detection pipeline built on Polymarket's public trade data. 
 Ingests trade data from Polymarket's public API, converts each trade to dollars (shares × price), scores it with per-market z-scores, and flags the outliers.
 
 **Three flag types:**
-- **Size:** the trade is unusually large in dollars relative to that market's other trades (threshold: 2.5σ)
+- **Size:** the trade is unusual for its market in what it could win (threshold: 2.5σ) and in what it cost (threshold: 1.5σ). What it could win is shares × (1 − price) for a buy and shares × price for a sell, so a large bet on a near-certain outcome no longer looks suspicious.
 - **Timing:** the trade was placed in the final 7 days before the market's scheduled end date, and unusually late relative to that market's other trades (threshold: 2.0σ)
 - **Confluence:** both size and timing elevated at once (threshold: 1.5σ each)
 
@@ -68,7 +68,7 @@ A review of the flagged trades themselves, not just the flag counts, found two e
 
 Polymarket API
 ↓
-fetch.py: pulls 500 recent trades per market, stores in SQLite
+fetch.py: pulls up to 5,000 recent trades per market from Polymarket's Data API v2, stores in SQLite
 ↓
 detect.py: converts to dollars, computes per-market z-scores, writes flags
 ↓
@@ -170,11 +170,10 @@ This is a prototype, not a production system. Key gaps documented explicitly:
 
 **Data and signal gaps:**
 - The timing signal is anchored to the scheduled end date, which is not when a market actually resolves. A better anchor is the market's largest price move or its actual resolution time.
-- Each market's baseline is its 500 most recent trades at fetch time, not its full history.
+- Each market's baseline is its 5000 most recent trades at fetch time, not its full history.
 - Markets are the API's default top 20 active markets, not markets chosen because inside information is plausible.
 - Market outcomes are not stored, so there is no check on whether a flagged trade was on the winning side.
-- Dollar size ignores odds. A large purchase at $0.99 risks a lot to win very little and is unlikely to be an informed bet, but it scores the same as a large purchase at $0.05.
-- Buys and sells are scored the same way.
+- Potential win treats every trade as a new bet. A trader closing out an earlier position looks the same as one opening a new position.
 
 **Evaluation gaps:**
 - No ground truth labels, so precision and recall cannot be computed

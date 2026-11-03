@@ -95,19 +95,48 @@ def save_markets(markets):
 
 # ── Fetching trades ──────────────────────────────────────────────
 
-def fetch_trades_for_market(condition_id, limit=500):
-    try:
-        response = requests.get(
-            f"{DATA_URL}/trades",
-            params={"market": condition_id, "limit": limit},
-            timeout=10
-        )
-        response.raise_for_status()
-        data = response.json()
-        return data if isinstance(data, list) else []
-    except Exception as e:
-        print(f"  Error fetching trades: {e}")
-        return []
+MAX_TRADES_PER_MARKET = 5000   # cap per market so one huge market can't take forever
+
+
+def fetch_trades_for_market(condition_id, max_trades=MAX_TRADES_PER_MARKET):
+    """
+    Download a market's trades from Polymarket's Data API v2.
+
+    v2 sends trades one page at a time. Each page includes a bookmark
+    (next_cursor). We keep asking for the next page until there is no
+    bookmark left, or until we reach max_trades.
+    """
+    trades = []
+    params = {"condition": condition_id, "limit": 1000}
+
+    while len(trades) < max_trades:
+        try:
+            response = requests.get(f"{DATA_URL}/v2/trades", params=params, timeout=15)
+            response.raise_for_status()
+            body = response.json()
+        except Exception as e:
+            print(f"  Error fetching trades: {e}")
+            break
+
+        if isinstance(body, list):
+            page, next_cursor = body, None
+        else:
+            page = body.get("data") or body.get("trades") or body.get("results") or []
+            next_cursor = (body.get("pagination") or {}).get("next_cursor")
+            if not page and not trades:
+                # Debugging help: if we found nothing, show what Polymarket sent back
+                print(f"  No trades found. Response keys: {list(body.keys())}")
+
+        trades.extend(page)
+
+        if not next_cursor:
+            break
+
+        # Ask for the next page. Keep the same filter; the bookmark remembers the rest.
+        params = {"condition": condition_id, "cursor": next_cursor}
+        time.sleep(0.2)   # be polite to the API between pages
+
+    return trades[:max_trades]
 
 
 def calculate_minutes_to_close(unix_timestamp, end_date_str):
@@ -129,19 +158,38 @@ def calculate_minutes_to_close(unix_timestamp, end_date_str):
         return None
 
 
+def pick(record, *names):
+    """
+    Return the first field that exists in a trade record.
+    v2 spells fields in snake_case (proxy_wallet); v1 used camelCase
+    (proxyWallet). Trying both means either version works.
+    """
+    for name in names:
+        value = record.get(name)
+        if value is not None:
+            return value
+    return None
+
+
 def save_trades(trades, condition_id, end_date):
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     saved = 0
 
     for t in trades:
-        unix_ts  = t.get("timestamp")
-        minutes  = calculate_minutes_to_close(unix_ts, end_date or "")
+        tx_hash = pick(t, "transaction_hash", "transactionHash")
+        unix_ts = pick(t, "timestamp")
 
+        # Skip records we can't use: no ID, or no usable time
+        if not tx_hash:
+            continue
         try:
-            ts_str = datetime.fromtimestamp(unix_ts, tz=timezone.utc).isoformat()
-        except Exception:
-            ts_str = str(unix_ts)
+            unix_ts = int(unix_ts)
+        except (TypeError, ValueError):
+            continue
+
+        minutes = calculate_minutes_to_close(unix_ts, end_date or "")
+        ts_str  = datetime.fromtimestamp(unix_ts, tz=timezone.utc).isoformat()
 
         c.execute('''
             INSERT OR IGNORE INTO trades
@@ -149,15 +197,15 @@ def save_trades(trades, condition_id, end_date):
                  timestamp, minutes_to_close, proxy_wallet)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
-            t.get("transactionHash"),
+            tx_hash,
             condition_id,
-            t.get("side"),
-            t.get("outcome"),
-            float(t.get("size", 0)),
-            float(t.get("price", 0)),
+            pick(t, "side"),
+            pick(t, "outcome"),
+            float(pick(t, "size") or 0),
+            float(pick(t, "price") or 0),
             ts_str,
             minutes,
-            t.get("proxyWallet")
+            pick(t, "proxy_wallet", "proxyWallet"),
         ))
         if c.rowcount > 0:
             saved += 1
@@ -165,8 +213,7 @@ def save_trades(trades, condition_id, end_date):
     conn.commit()
     conn.close()
     return saved
-
-
+    
 # ── Main run ─────────────────────────────────────────────────────
 
 def run_fetch():

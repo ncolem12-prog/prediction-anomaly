@@ -248,7 +248,7 @@ export default function Dashboard() {
               </div>
             ))}
             <p className="text-gray-600 text-xs mt-4 leading-relaxed">
-              Size = unusually large in dollars for that market. Timing = placed
+            Size = unusual for that market in both what the trade could win and what it cost. Timing = placed
               in the final 7 days before the scheduled end date and unusually late
               for that market. Confluence = both. A count of 0 means no trade in
               this sample met the rule.
