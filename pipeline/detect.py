@@ -12,6 +12,7 @@ DB_PATH = "data/anomaly.db"
 # that specific market — not globally, per market.
 
 SIZE_THRESHOLD   = 2.5   # flag if bet size z-score exceeds this
+COST_THRESHOLD   = 1.5   # potential-win flags also need cost z-score above this
 TIMING_THRESHOLD = 2.0   # flag if timing z-score exceeds this
 CONFLUENCE_MIN   = 1.5   # flag if BOTH scores exceed this (weaker individually, stronger together)
 MIN_TRADES       = 5     # skip markets with fewer than this — not enough baseline
@@ -90,6 +91,7 @@ def detect_anomalies():
         # ── Signal 1: Size anomaly ───────────────────────────────
         # Is this bet's potential win unusually large for this specific market?
         group["size_zscore"] = compute_zscores(group["potential_win"])
+        group["cost_zscore"] = compute_zscores(group["usd_size"])
 
         # ── Signal 2: Timing anomaly ─────────────────────────────
         # Is this bet placed unusually close to market close?
@@ -113,7 +115,7 @@ def detect_anomalies():
         # 1. Size alone is very high
         # 2. Timing alone is very high (very late bet)
         # 3. Both are moderately high (confluence — the most interesting case)
-        size_flag       = group["size_zscore"]   > SIZE_THRESHOLD
+        size_flag       = (group["size_zscore"] > SIZE_THRESHOLD) & (group["cost_zscore"] > COST_THRESHOLD)
         timing_flag     = in_window & (group["timing_zscore"] > TIMING_THRESHOLD)
         confluence_flag = (
             in_window &
